@@ -49,6 +49,7 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useForm, useToast } from 'vuestic-ui'
 import { validators } from '../../services/utils'
+import { httpGet } from '../../net/http';
 
 const { validate } = useForm('form')
 const { push } = useRouter()
@@ -60,10 +61,20 @@ const formData = reactive({
   keepLoggedIn: false,
 })
 
+interface ApiResponseData {
+    id: number;
+    title: string;
+}
+
 const submit = () => {
   if (validate()) {
-    init({ message: "You've successfully logged in", color: 'success' })
-    push({ name: 'dashboard' })
+    
+    httpGet("/api/login", (data : string)=>{
+        console.log(data);
+    });
+
+    //init({ message: "You've successfully logged in", color: 'success' })
+    //push({ name: 'dashboard' })
   }
 }
 </script>
