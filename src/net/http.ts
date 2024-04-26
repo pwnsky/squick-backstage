@@ -42,4 +42,16 @@ function httpGet(uri : string, callback : any) {
     });
 }
 
-export { httpGet }
+
+function httpPost(uri : string, data : any, callback : any) {
+    axios.post<any>(baseUrl + uri, data)
+    .then((response: AxiosResponse<any>) => {
+        console.log(response.data);
+        callback(response);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+}
+
+export { httpGet, httpPost }
