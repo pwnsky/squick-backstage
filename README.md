@@ -8,3 +8,11 @@
 npm install
 npm run dev
 ```
+
+
+
+
+
+Version: vuestic-admin-4.0.0
+
+https://ui.vuestic.dev/
