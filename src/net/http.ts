@@ -8,6 +8,8 @@ if (import.meta.env.VITE_APP_IS_DEV == "true") {
     baseUrl = import.meta.env.VITE_APP_RELEASE_SERVER_URL_BASE
 }
 
+axios.defaults.withCredentials = true;
+
 axios.interceptors.request.use(
   function (config) {
     // Reuqested before
@@ -34,7 +36,6 @@ axios.interceptors.response.use(
 function httpGet(uri : string, callback : any) {
     axios.get<any>(baseUrl + uri)
     .then((response: AxiosResponse<any>) => {
-        console.log(response.data);
         callback(response);
     })
     .catch((error) => {
@@ -46,7 +47,6 @@ function httpGet(uri : string, callback : any) {
 function httpPost(uri : string, data : any, callback : any) {
     axios.post<any>(baseUrl + uri, data)
     .then((response: AxiosResponse<any>) => {
-        console.log(response.data);
         callback(response);
     })
     .catch((error) => {
