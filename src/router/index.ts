@@ -8,13 +8,13 @@ import RouteViewComponent from '../layouts/RouterBypass.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)*',
-    redirect: { name: 'dashboard' },
+    redirect: { name: 'root' },
   },
   {
     name: 'admin',
     path: '/',
     component: AppLayout,
-    redirect: { name: 'dashboard' },
+    redirect: { name: 'root' },
     children: [
       {
         name: 'dashboard',
@@ -104,6 +104,11 @@ const routes: Array<RouteRecordRaw> = [
     name: '404',
     path: '/404',
     component: () => import('../pages/404.vue'),
+  },
+  {
+    name: 'root',
+    path: '/',
+    component: () => import('../pages/root.vue'),
   },
 ]
 

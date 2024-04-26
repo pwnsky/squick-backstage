@@ -4,12 +4,12 @@
     <VaButton
       v-if="!isMobile"
       preset="secondary"
-      href="https://admin.vuestic.dev/"
+      href="https://github.com/pwnsky/squick/"
       target="_blank"
       color="textPrimary"
       class="app-navbar-actions__item flex-shrink-0 mx-0"
     >
-      {{ t('aboutVuesticAdmin') }}
+      {{ t('about') }}
     </VaButton>
     <VaButton
       v-if="!isMobile"

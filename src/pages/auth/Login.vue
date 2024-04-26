@@ -69,21 +69,19 @@ interface ApiResponseData {
 const submit = () => {
   if (validate()) {
     var login = {
-        account : "123456",
-        password : "password"
+        account : formData.email,
+        password : formData.password
     };
 
     httpPost("/api/login", login, (rsp : any)=>{
-        const cookieName = 'myCookie';
-        const cookieValue = 'Hello, World!';
-        const expires = new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString(); 
-        //document.cookie = `${cookieName}=${cookieValue}; expires=${expires}; path=/`;
-        //document.cookie = 'Session=eyJhY2NvdW50IjoiMTIzNDU2IiwiYWNjb3VudF9pZCI6IjAtMTcxNDEzOTIxMjY0NDAwMDAwMSIsImxvZ2luX3RpbWUiOjE3MTQxMzkyMTIsInRva2VuIjoiZDU3YmI5NzYzNjViZTdmYzAxN2VhMDc2MDYyYTEyOWM4MzQ4NzYzYjg0NTRjZTM1ZTZiODg2Zjc0MjM0NTc4MyJ9;Path=/;Max-Age=1209600'
-        console.log(rsp);
-    });
+        var data = rsp.data
+        if (data.code == 0) {
+            init({ message: "You've successfully logged in", color: 'success' })
+            push({ name: 'dashboard' })
+        }
+    }, (err : any) => {
 
-    //init({ message: "You've successfully logged in", color: 'success' })
-    //push({ name: 'dashboard' })
+    });
   }
 }
 </script>

@@ -27,30 +27,28 @@ axios.interceptors.response.use(
     return response
   },
   function (error) {
-    // error
-
     return Promise.reject(error)
   },
 )
 
-function httpGet(uri : string, callback : any) {
+function httpGet(uri : string, callback : any, err_callback : any) {
     axios.get<any>(baseUrl + uri)
     .then((response: AxiosResponse<any>) => {
         callback(response);
     })
     .catch((error) => {
-        console.error(error);
+        err_callback(error)
+        
     });
 }
 
-
-function httpPost(uri : string, data : any, callback : any) {
+function httpPost(uri : string, data : any, callback : any, err_callback : any) {
     axios.post<any>(baseUrl + uri, data)
     .then((response: AxiosResponse<any>) => {
         callback(response);
     })
     .catch((error) => {
-        console.error(error);
+        err_callback(error)
     });
 }
 
