@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { defineVaDataTableColumns, useModal } from 'vuestic-ui'
-import { User, UserRole } from '../types'
-import UserAvatar from './UserAvatar.vue'
+import { Node } from '../types'
 import { PropType, computed, toRef } from 'vue'
-import { Pagination, Sorting } from '../../../data/pages/users'
+import { Pagination, Sorting } from '../../../data/pages/nodes'
 import { useVModel } from '@vueuse/core'
 import { Project } from '../../projects/types'
 
 const columns = defineVaDataTableColumns([
-  { label: 'Full Name', key: 'fullname', sortable: true },
-  { label: 'Email', key: 'email', sortable: true },
-  { label: 'Username', key: 'username', sortable: true },
-  { label: 'Role', key: 'role', sortable: true },
-  { label: 'Projects', key: 'projects', sortable: true },
+  { label: 'ID', key: 'id', sortable: true },
+  { label: 'Name', key: 'name', sortable: true },
+  { label: 'Update time', key: 'update_time', sortable: true },
+  { label: 'Workload', key: 'workload', sortable: true },
+  { label: 'Public IP', key: 'public_ip', sortable: true },
+  { label: 'Port', key: 'port', sortable: true },
+  { label: 'Status', key: 'status', sortable: true },
   { label: ' ', key: 'actions', align: 'right' },
 ])
 
 const props = defineProps({
   users: {
-    type: Array as PropType<User[]>,
+    type: Array as PropType<Node[]>,
     required: true,
   },
   loading: { type: Boolean, default: false },
@@ -28,8 +29,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (event: 'edit-user', user: User): void
-  (event: 'delete-user', user: User): void
+  (event: 'edit-user', user: Node): void
+  (event: 'delete-user', user: Node): void
   (event: 'update:sortBy', sortBy: Sorting['sortBy']): void
   (event: 'update:sortingOrder', sortingOrder: Sorting['sortingOrder']): void
 }>()
@@ -38,20 +39,14 @@ const users = toRef(props, 'users')
 const sortByVModel = useVModel(props, 'sortBy', emit)
 const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
 
-const roleColors: Record<UserRole, string> = {
-  admin: 'danger',
-  user: 'background-element',
-  owner: 'warning',
-}
-
 const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagination.perPage))
 
 const { confirm } = useModal()
 
-const onUserDelete = async (user: User) => {
+const onUserDelete = async (user: Node) => {
   const agreed = await confirm({
     title: 'Delete user',
-    message: `Are you sure you want to delete ${user.fullname}?`,
+    message: `Are you sure you want to delete ${user.name}?`,
     okText: 'Delete',
     cancelText: 'Cancel',
     size: 'small',
@@ -64,7 +59,7 @@ const onUserDelete = async (user: User) => {
 }
 
 const formatProjectNames = (projects: Project[]) => {
-  if (projects.length === 0) return 'No projects'
+  if (projects == null || projects.length === 0) return 'No projects'
   if (projects.length <= 2) {
     return projects.map((project) => project.project_name).join(', ')
   }
@@ -89,32 +84,10 @@ const formatProjectNames = (projects: Project[]) => {
     :items="users"
     :loading="$props.loading"
   >
-    <template #cell(fullname)="{ rowData }">
-      <div class="flex items-center gap-2 max-w-[230px] ellipsis">
-        <UserAvatar :user="rowData as User" size="small" />
-        {{ rowData.fullname }}
-      </div>
-    </template>
 
-    <template #cell(username)="{ rowData }">
+    <template #cell(name)="{ rowData }">
       <div class="max-w-[120px] ellipsis">
-        {{ rowData.username }}
-      </div>
-    </template>
-
-    <template #cell(email)="{ rowData }">
-      <div class="ellipsis max-w-[230px]">
-        {{ rowData.email }}
-      </div>
-    </template>
-
-    <template #cell(role)="{ rowData }">
-      <VaBadge :text="rowData.role" :color="roleColors[rowData.role as UserRole]" />
-    </template>
-
-    <template #cell(projects)="{ rowData }">
-      <div class="ellipsis max-w-[300px] lg:max-w-[450px]">
-        {{ formatProjectNames(rowData.projects) }}
+        {{ rowData.name }}
       </div>
     </template>
 
@@ -125,7 +98,7 @@ const formatProjectNames = (projects: Project[]) => {
           size="small"
           icon="mso-edit"
           aria-label="Edit user"
-          @click="$emit('edit-user', rowData as User)"
+          @click="$emit('edit-user', rowData as Node)"
         />
         <VaButton
           preset="primary"
@@ -133,7 +106,7 @@ const formatProjectNames = (projects: Project[]) => {
           icon="mso-delete"
           color="danger"
           aria-label="Delete user"
-          @click="onUserDelete(rowData as User)"
+          @click="onUserDelete(rowData as Node)"
         />
       </div>
     </template>

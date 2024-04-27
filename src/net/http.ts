@@ -52,4 +52,12 @@ function httpPost(uri : string, data : any, callback : any, err_callback : any) 
     });
 }
 
-export { httpGet, httpPost }
+async function httpAsyncGet(uri : string) {
+    return await axios.get(baseUrl + uri);
+}
+
+async function httpAsyncPost(uri : string, data : any) {
+    return await axios.post<any>(baseUrl + uri, data)
+}
+
+export { httpGet, httpPost, httpAsyncGet, httpAsyncPost}
