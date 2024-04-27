@@ -14,6 +14,8 @@ const columns = defineVaDataTableColumns([
   { label: 'Public IP', key: 'public_ip', sortable: true },
   { label: 'Port', key: 'port', sortable: true },
   { label: 'Status', key: 'status', sortable: true },
+  { label: 'NetConnection', key: 'connections', sortable: true },
+  { label: 'NetClientConnection', key: 'net_client_connections', sortable: true },
   { label: ' ', key: 'actions', align: 'right' },
 ])
 

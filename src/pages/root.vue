@@ -11,6 +11,5 @@ const { push } = useRouter()
             console.log("not auth")
             push({ name: 'login' })
         }
-        
     });
 </script>

@@ -1,4 +1,5 @@
 import axios, { AxiosResponse }  from 'axios'
+import { Exception } from 'sass';
 
 var baseUrl = "";
 
@@ -27,6 +28,13 @@ axios.interceptors.response.use(
     return response
   },
   function (error) {
+    if (error.response.status == 401) {
+        console.log("not auth")
+        if (document.location.pathname != "/") {
+            document.location.href = "/"
+        }
+    }
+    
     return Promise.reject(error)
   },
 )
