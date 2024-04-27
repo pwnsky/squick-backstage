@@ -19,6 +19,13 @@ export default {
       },
     },
     {
+        name: 'nodes',
+        displayName: 'menu.nodes',
+        meta: {
+          icon: 'group',
+        },
+      },
+    {
       name: 'users',
       displayName: 'menu.users',
       meta: {
