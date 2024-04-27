@@ -8,6 +8,7 @@ import { Project } from '../../projects/types'
 
 const columns = defineVaDataTableColumns([
   { label: 'ID', key: 'id', sortable: true },
+  { label: 'Type', key: 'type', sortable: true },
   { label: 'Name', key: 'name', sortable: true },
   { label: 'Update time', key: 'update_time', sortable: true },
   { label: 'Workload', key: 'workload', sortable: true },
